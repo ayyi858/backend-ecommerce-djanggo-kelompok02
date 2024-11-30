@@ -1,0 +1,100 @@
+{% extends 'store/main.html' %}
+{% load filters %}
+{% load static %}
+{% block content %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card product-card shadow-sm h-100 border-0">
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <img class="card-img-top product-image" src="{{ product.imageURL }}" alt="{{ product.name }}">
+            </div>
+            <!-- Card Body -->
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center font-weight-bold">{{ product.name }}</h5>
+                <p class="card-text text-muted text-center">
+                    <span class="price-label">Price:</span> 
+                    <span class="text-success font-weight-bold">${{ product.price|format_rupiah }}</span>
+                </p>
+                <!-- Buttons -->
+                <div class="mt-auto">
+                    <button data-product="{{ product.id }}" data-action="add" 
+                            class="btn btn-primary btn-sm update-cart w-100 mb-2">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                    <a class="btn btn-outline-success btn-sm w-100" href="#">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    /* Styling for Product Cards */
+    .product-card {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-image-container {
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+    }
+
+    .product-image {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.1);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        color: #343a40;
+        margin-bottom: 0.5rem;
+    }
+
+    .price-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .btn-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
+</style>
+{% endblock content %}

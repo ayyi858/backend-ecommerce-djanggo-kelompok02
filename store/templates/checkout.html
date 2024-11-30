@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midtrans Checkout</title>
+    <!-- Midtrans Snap.js -->
+    <script
+        type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ MIDTRANS_CLIENT_KEY }}">
+    </script>
+</head>
+<body>
+    <h1>Midtrans Checkout</h1>
+    <form id="payment-form">
+        <label for="order_id">Order ID:</label>
+        <input type="text" id="order_id" name="order_id" value="order-12345"><br><br>
+
+        <label for="gross_amount">Amount (IDR):</label>
+        <input type="number" id="gross_amount" name="gross_amount" value="150000"><br><br>
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="John"><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="Doe"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="johndoe@example.com"><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="08123456789"><br><br>
+
+        <button type="button" id="payButton">Pay with Midtrans</button>
+    </form>
+
+    <script>
+        document.getElementById('payButton').addEventListener('click', function () {
+            const order_id = document.getElementById('order_id').value;
+            const gross_amount = document.getElementById('gross_amount').value;
+            const first_name = document.getElementById('first_name').value;
+            const last_name = document.getElementById('last_name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Fetch Snap Token from backend
+            fetch('/create-transaction/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    order_id: order_id,
+                    gross_amount: parseInt(gross_amount),
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    phone: phone
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                snap.pay(data.token, {
+                    onSuccess: function (result) {
+                        console.log(result);
+                        alert("Payment Successful!");
+                        window.location.href = "/payment-success/";
+                    },
+                    onPending: function (result) {
+                        console.log(result);
+                        alert("Payment Pending!");
+                    },
+                    onError: function (result) {
+                        console.log(result);
+                        alert("Payment Failed!");
+                    }
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

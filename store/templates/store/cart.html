@@ -1,0 +1,84 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Cart Summary -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-body">
+                    <a class="btn btn-outline-primary mb-3" href="{% url 'store' %}">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h5>Items: <strong>{{ order.get_cart_items }}</strong></h5>
+                                </td>
+                                <td>
+                                    <h5>Total: <strong class="text-success">${{ order.get_cart_total|floatformat:2 }}</strong></h5>
+                                </td>
+                                <td class="text-end">
+                                    <a class="btn btn-success btn-lg" href="{% url 'checkout' %}">
+                                        <i class="fas fa-credit-card"></i> Checkout
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex fw-bold border-bottom pb-2 mb-3">
+                        <div class="flex-grow-1">Item</div>
+                        <div class="text-center" style="width: 100px;">Price</div>
+                        <div class="text-center" style="width: 100px;">Quantity</div>
+                        <div class="text-center" style="width: 100px;">Total</div>
+                        <div class="text-center" style="width: 50px;">Action</div>
+                    </div>
+                    {% for item in items %}
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <img class="img-fluid rounded shadow-sm" src="{{ item.product.imageURL }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+                        </div>
+                        <div class="flex-grow-1">
+                            <p class="mb-0 text-dark fw-bold">{{ item.product.name }}</p>
+                        </div>
+                        <div class="text-center" style="width: 100px;">
+                            <p class="mb-0 text-primary fw-bold">${{ item.product.price|floatformat:2 }}</p>
+                        </div>
+                        <div class="text-center" style="width: 100px;">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <button data-product="{{ item.product.id }}" data-action="remove" class="btn btn-light border update-cart me-2" style="font-size: 1.2rem;">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <p class="mb-0">{{ item.quantity }}</p>
+                                <button data-product="{{ item.product.id }}" data-action="add" class="btn btn-light border update-cart ms-2" style="font-size: 1.2rem;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center" style="width: 100px;">
+                            <p class="mb-0 text-success fw-bold">${{ item.get_total|floatformat:2 }}</p>
+                        </div>
+                        <div class="text-center" style="width: 50px;">
+                            <button data-product="{{ item.product.id }}" data-action="delete" class="btn btn-danger update-cart" style="font-size: 1.2rem;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling tetap sama seperti template sebelumnya */
+</style>
+{% endblock content %}

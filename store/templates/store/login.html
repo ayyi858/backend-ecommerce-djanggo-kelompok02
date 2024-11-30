@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Raleway:wght@700&display=swap">
+    <title>Login</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1E3A78, #2A4E92); /* Warna biru solid */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Bubble Background */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 15%;
+        }
+
+        .bubble:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            left: 70%;
+        }
+
+        .bubble:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 40%;
+        }
+
+        .bubble:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 80%;
+            left: 20%;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Login Form Container */
+        .login-container {
+            background: #ffffff; /* Ganti putih untuk kontras */
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: slide-in 0.7s ease-out;
+            color: #333; /* Warna teks lebih gelap untuk kontras */
+        }
+
+        .login-container h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #1E3A78; /* Warna biru tema */
+        }
+
+        .login-container label {
+            font-size: 1rem;
+            color: #555; /* Teks label */
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #f9f9f9; /* Background input lebih cerah */
+            color: #333;
+            outline: none;
+            transition: transform 0.3s ease, background 0.3s ease, border 0.3s ease;
+        }
+
+        .login-container input:focus {
+            background: #ffffff;
+            border: 1px solid #1E3A78;
+            transform: translateY(-2px);
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1E3A78, #2A4E92);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 57, 123, 0.4);
+        }
+
+        .login-container a {
+            color: #1E3A78; /* Warna biru tema */
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+        .login-container p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .message {
+            margin-top: 10px;
+            color: #1E3A78; /* Warna biru tema */
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes slide-in {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bubble Background -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <div class="login-container">
+        <h2>Login Bro! 🤟</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Nama Pengguna</label>
+            <input type="text" id="username" name="username" placeholder="Masukkan nama pengguna" required>
+            <label for="password">Kata Sandi</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required>
+            <button type="submit">Masuk</button>
+        </form>
+        <p>Belum punya akun? <a href="{% url 'register' %}">Daftar yuk!</a></p>
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
