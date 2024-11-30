@@ -69,6 +69,7 @@ Sebelum menjalankan proyek ini, pastikan Anda memiliki perangkat lunak berikut:
 ## Dokumentasi Pengerjaan
 ![Gambar WhatsApp 2024-11-20 pukul 19 05 32_40f15207](https://github.com/user-attachments/assets/a2762a44-5698-4d38-8cb3-c3744db0c0d4)
 
+![Gambar WhatsApp 2024-11-20 pukul 19 05 30_fcfad36c](https://github.com/user-attachments/assets/5bbdeada-9387-4278-a0eb-20eade08c97c)
 
 
 
